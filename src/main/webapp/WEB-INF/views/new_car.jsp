@@ -3,13 +3,57 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-
 <%@ page import="com.abc.carportal.entity.Car"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
-<head>
-    <!-- Access the Static Resources without using spring URL -->
+   <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!--font-family-->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>ABC Cars | Cars Lists</title>
+
+        
+      <!--animate.css-->
+        <link rel="stylesheet" href="css/animate.css">
+       
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- bootsnav -->
+        <link rel="stylesheet" href="css/bootsnav.css">
+
+        <!--style.css-->
+        <link rel="stylesheet" href="css/style.css">
+
+        <!--responsive.css-->
+        <link rel="stylesheet" href="css/responsive.css">
+
+        
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		
+        <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <!-- Enable Bootstrap -->
+    <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <link href="/css/style2.css" rel="stylesheet" />
     <script src="/js/custom.js"></script>
 	<style>
@@ -19,9 +63,21 @@
 
 	
 	body {
-      	background-color: #1c0d342a;
+		background-color: #1c0d342a;
     }
-    
+.container{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+	
+.text-group {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+	height: 50px;
+}
 	</style>
 </head>
 
@@ -32,19 +88,21 @@
     <!-- First Container -->
     <div class="container">
 		
-			<form:form method="POST" action="/cars" modelAttribute="car" enctype="multipart/form-data">
-				<input type="hidden" value="${_csrf.token}" />
-				<form:hidden path="id" />
-				<h2>Sell a Car</h2>
-		
-				<div class="form-group">
-						<label for="carphoto">Upload Car Photo:</label> 
-						<input type="file" name="file"  class="text-group" required />
-				</div>
+		<form:form method="POST" action="/cars" modelAttribute="car" enctype="multipart/form-data">
+            <input type="hidden" value="${_csrf.token}" />
+            <form:hidden path="id" />
+            <h2 class="text-center">Sell a Car</h2>
+
+            <div class="form-group">
+                <label for="carphoto">Upload Car Photo:</label>
+                <input type="file" name="file" class="form-control" required onchange="previewImage(event)" />
+                <img id="photoPreview" src="" alt="Car Photo Preview" style="display: none;" />
+            </div>
+
 		
 				<div class="form-group">
 					<label for="make">Car Make:</label>
-					<div class="input-group">
+					<div class="text-group">
 						<select name="make" class="form-control" path="make" required>
 							<option value="default">Select Make</option><!-- /.option-->
 							<option value="toyota">Toyota</option><!-- /.option-->
@@ -62,7 +120,7 @@
 
 				<div class="form-group">
 					<label for="model">Car Model:</label>
-					<div class="input-group">
+					<div class="text-group">
 						<select name="model" class="form-control" path="model" required>
 							<option value="default">Select Model</option>
 							<option value="corolla">Corolla</option>
@@ -90,7 +148,7 @@
 				</div>
 				<div class="form-group">
 					<label for="body">Body Style:</label>
-					<div class="input-group">
+					<div class="text-group">
 						<select name="bodyStyle" class="form-control"  path="bodyStyle" required>
 							<option value="default">Select Body Style</option>
 							<option value="sedan">Sedan</option>
@@ -113,12 +171,30 @@
 						<form:input path="price"  class="text-group" type="number" />
 				</div>				
 		
-				<input type="submit" class="btn-primary" name="Add" value="Save" />
-				<input type="button" class="btn-primary" value="Cancel" onclick="cancel()" />
-		
+				<input type="submit" class="btn btn-success" name="Add" value="Save" />
+				<input type="button" class="btn btn-danger" value="Cancel" onclick="cancel()" />
+	
 				<script>
 					function cancel() {
-						window.location.href = "cars"
+						window.location.href = "cars";
+					}
+	
+					function previewImage(event) {
+						const file = event.target.files[0];
+						const preview = document.getElementById('photoPreview');
+						const reader = new FileReader();
+	
+						reader.onload = function() {
+							preview.src = reader.result;
+							preview.style.display = 'block'; // Show the image
+						}
+	
+						if (file) {
+							reader.readAsDataURL(file);
+						} else {
+							preview.src = '';
+							preview.style.display = 'none'; // Hide if no file
+						}
 					}
 				</script>
 			</form:form>
