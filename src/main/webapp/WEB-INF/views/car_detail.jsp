@@ -1,24 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+    <!-- Enable Bootstrap -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />        
-
-    <title>Car Details</title>
-    <!-- Link to static resources -->
     <link href="/css/style2.css" rel="stylesheet" />
-    <link href="/css/style.css" rel="stylesheet" />
     <script src="/js/custom.js"></script>
     <style>
         body {
@@ -28,7 +24,7 @@
         .container {
             padding-top: 0px;
             display: flex;
-            margin-left: 30; /* Adjust the margin to give way to the menu */
+            margin-left: 30px; /* Adjust the margin to give way to the menu */
             width: calc(80% - 250px); /* Calculate the width to accommodate the menu */
             border-radius: 10px;
             overflow: hidden; /* Ensure content doesn't exceed container */
@@ -104,62 +100,63 @@
         }
 
         .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-right: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-    }
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
 
-    .btn.btn-warning {
-        background-color: #ffc107;
-        color: #fff;
-    }
+        .btn.btn-warning {
+            background-color: #ffc107;
+            color: #fff;
+        }
 
-    .btn.btn-warning:hover {
-        background-color: orange;
-    }
+        .btn.btn-warning:hover {
+            background-color: orange;
+        }
 
-    .btn-dark {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-right: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-        background-color: rgba(255, 38, 38, 0.856); /* Change the background color to match btn-warning */
-        color: #fff;
-    }
+        .btn-dark {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            background-color: rgba(255, 38, 38, 0.856); /* Change the background color to match btn-warning */
+            color: #fff;
+        }
 
-    .btn-dark:hover {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-right: 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center;
-        text-decoration: none;
-        background-color: red; /* Change the background color to match btn-warning */
-        color: #fff;
-    }
+        .btn-dark:hover {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            background-color: red; /* Change the background color to match btn-warning */
+            color: #fff;
+        }
 
+        .text-red {
+            color: red;
+        }
     </style>
-
 </head>
 
 <body>
-
     <%@ include file="menu.jsp" %>
     <div class="container">
         <div class="car-detail">
@@ -167,42 +164,83 @@
                 <h2>Car Details</h2>
             </div>
 
-            <form:form>
+            <form:form method="post" action="/car_detail">
                 <img src="/images/${car.carphoto}">
                 <div>
-                    <h5>$${car.price}</h5>
+                    <h5 class="text-center">${car.make} ${car.bodyStyle} ${car.model}</h5>
                     <div>
-                        <p>Car Make : ${car.make}</p>
-                        <p>Car Model: ${car.model}</p>
-                        <p>Car Body Style :${car.bodyStyle}</p>
-                        
-                    </div>
-                    <div class="input-group">
-                        <form action="car_detail?id=${car.id}" method="post">
-                            <input type="hidden" name="id" value="${car.id}" />
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <input type="number" placeholder="Enter Bid Price" name="bitprice" />
-                        </form>
+                        <p>Car Price :$ ${car.price}</p>
+                        <p>Status: ${car.active ? 'Active' : 'Inactive'}</p> <!-- Show status -->
                     </div>
 
+                    <br>
+                    
+                    <!-- Activate/Deactivate Button -->
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <div class="card-buttons">
+                            <c:choose>
+                                <c:when test="${car.active}">
+                                    <a href="deactivate?id=${car.id}" class="btn btn-danger">Deactivate</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="activate?id=${car.id}" class="btn btn-success">Activate</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </sec:authorize>
+                    <br>
+                    <!-- Error Messages -->
+                    <c:if test="${not empty error_message}">
+                        <div class="alert alert-danger text-red" role="alert">
+                            ${error_message}
+                        </div>
+                    </c:if>
+
+                    <!-- Bid Form -->
+                    <div class="input-group">
+                        <input type="hidden" name="id" value="${car.id}" />
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="number" placeholder="Enter Bid Price" name="bitprice" ${car.active ? '' : 'disabled'} /> <!-- Disable input if car is inactive -->
+                    </div>
+                
                     <div style="padding: 20px;">
-                        <input type="submit" value="Bid Car" class="btn btn-warning">
-                        <a href="cars" class="btn-dark">Go Back</a>
+                        <input type="submit" value="Bid Car" class="btn btn-warning" ${car.active ? '' : 'disabled'} /> <!-- Disable submit button if car is inactive -->
+                        <a href="cars" class="btn btn-dark">Go Back</a>
                     </div>
                 </div>
-
-                <script>
-                    function goBack() {
-                        window.history.back();
-                    }
-                </script>
-
             </form:form>
         </div>
 
+
+        <!-- Display Bidding History -->
         <div class="bid-history">
-            <h4>Bidding History</h4>
+            <h3>Latest Bid</h3>
             <hr>
+            <c:choose>
+            <c:when test="${empty bidinfo}">
+                <p>No latest bid available.</p>
+            </c:when>
+            <c:otherwise>
+                <!-- Display only the latest bid -->
+                <c:forEach var="car_bidding" items="${bidinfo}" varStatus="status">
+                    <c:if test="${status.index eq bidinfo.size() - 1}">
+                        <div>
+                            <div>
+                                <p>${car_bidding.bidderName}</p>
+                            </div>
+                            <div>
+                                <div>
+                                    <p><small>${car_bidding.bid_date_time}</small></p>
+                                    <p>Bidded Price: $ ${car_bidding.bidderPrice}0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </c:otherwise>
+            </c:choose>
+            <hr> <!-- Moved the HR outside the c:choose block -->
+            <h6>Bidding History</h6>
             <c:choose>
                 <c:when test="${empty bidinfo}">
                     <p>No bidding history available.</p>
@@ -216,7 +254,7 @@
                             <div>
                                 <div>
                                     <p><small>${car_bidding.bid_date_time}</small></p>
-                                    <p>Bidded Price: ${car_bidding.bidderPrice}</p>
+                                    <p>Bidded Price: $ ${car_bidding.bidderPrice}0</p>
                                 </div>
                             </div>
                         </div>
@@ -225,6 +263,9 @@
                 </c:otherwise>
             </c:choose>
         </div>
+
+        <!-- Display Latest Bid -->
+        
     </div>
 </body>
 
